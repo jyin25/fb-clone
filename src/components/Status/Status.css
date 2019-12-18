@@ -1,0 +1,6 @@
+.status-entry-container {
+  border: 1px black solid;
+  height: 5rem;
+  background-color: beige;
+  margin-bottom: 3rem;
+}

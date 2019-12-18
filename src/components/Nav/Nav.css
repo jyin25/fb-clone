@@ -1,0 +1,9 @@
+.nav-bar-container, .nav-bar {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-bar-container {
+  padding: 1rem 0 1rem 0;
+  background-color: #385898;
+}

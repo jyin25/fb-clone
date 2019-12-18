@@ -1,0 +1,18 @@
+.status-news-container {
+  width: 30%;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.left-side {
+  margin-right: 3rem;
+}
+
+.right-side {
+  margin-left: 3rem;
+}
