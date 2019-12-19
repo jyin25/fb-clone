@@ -5,53 +5,12 @@ class Newsfeed extends React.Component {
   constructor(props) {
     super(props)
     this.state={
-      users: [
-        {
-          user: "Jun Yin",
-          status: "this project is hard",
-          pictures: "a",
-          time: "1/1/1",
-          likes: 0,
-          comments: 
-          [
-            {
-              user: "Jun",
-              comment: "You asdf sf asdf sdf sd f sdf as df asd fsa df sa dfs df sd fas df asdf as df sad fsa df sadf sad f sad fsd."
-            },
-            {
-              user: "Jun",
-              comment: "Can!"
-            },
-            {
-              user: "Jun",
-              comment: "Do it!"
-            },
-          ]
-        },
-        {
-          user: "Kindrick Yin",
-          status: "Milk!",
-          pictures: "",
-          time: "1/1/1",
-          likes: 0,
-          comments: 
-          [
-            {
-              user: "Jun",
-              comment: "Hi Baby!"
-            },
-            {
-              user: "Annie",
-              comment: "Hi Baby!"
-            },
-          ]
-        }
-      ],
+      users: [],
     }
   }
 
   componentDidMount() {
-  
+    this.setState({users: this.props.users})
   }
 
 
@@ -65,8 +24,11 @@ class Newsfeed extends React.Component {
             return (
               <div className="news-container">
                 <div className="news-header">
-                  <p>{userData.user}</p>
-                  <p>{userData.time}</p>
+                <div className="or-user-icon"></div>
+                  <div>
+                    <p>{userData.user}</p>
+                    <p>{userData.time}</p>
+                  </div>
                 </div>
                 <div className="news-description">
                   <p>{userData.status}</p>

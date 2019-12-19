@@ -1,0 +1,19 @@
+.profile-header {
+  height: 15rem;
+  border: black solid 1px;
+}
+
+.profile-body {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.intro, .photos, .friend-list {
+  height: 10rem;
+  width: 10rem;
+  border: 1px solid black;
+  margin: 0 1rem 1rem 0;
+}
+

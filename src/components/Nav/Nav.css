@@ -6,4 +6,6 @@
 .nav-bar-container {
   padding: 1rem 0 1rem 0;
   background-color: #385898;
+  display: flex;
+  justify-content: center;
 }
