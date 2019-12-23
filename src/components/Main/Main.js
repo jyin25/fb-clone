@@ -10,7 +10,15 @@ class Main extends React.Component {
   constructor(props) {
     super(props)
     this.state={
-      users: [
+      usersfeed: [],
+    }
+  }
+
+
+
+  componentWillMount = () => {
+    this.setState({
+      usersfeed: [
         {
           user: "Jun Yin",
           status: "this project is hard",
@@ -25,17 +33,17 @@ class Main extends React.Component {
             },
             {
               user: "Jun",
-              comment: "Can!"
+              comment: "asd!"
             },
             {
               user: "Jun",
-              comment: "Do it!"
+              comment: "asdasd asdasd!"
             },
           ]
         },
         {
           user: "Kindrick Yin",
-          status: "Milk!",
+          status: "sadas!",
           pictures: "",
           time: "1/1/1",
           likes: 0,
@@ -43,17 +51,24 @@ class Main extends React.Component {
           [
             {
               user: "Jun",
-              comment: "Hi Baby!"
+              comment: "sdf!"
             },
             {
               user: "Annie",
-              comment: "Hi Baby!"
+              comment: "sdf"
             },
           ]
         }
       ],
+    })
+  }
+
+  componentDidUpdate = () => {
+    if(this.state.usersFeed[0].time !== this.context.updatedFeed[0].time) {
+      //fetchData and set to state
     }
   }
+  
 
   render() {
     return (
@@ -68,7 +83,8 @@ class Main extends React.Component {
         <section className="status-news-container">
           <Status/>
           <div>
-            <Newsfeed users={this.state.users}/>
+            
+            <Newsfeed users={this.state.usersfeed}/>
           </div>
         </section>
         <section className="right-side">

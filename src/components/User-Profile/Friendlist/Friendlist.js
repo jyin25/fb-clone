@@ -4,7 +4,7 @@ class Friendlist extends React.Component {
   render() {
     return (
       <div>
-
+        <p>sdf</p>
       </div>
     )
   }

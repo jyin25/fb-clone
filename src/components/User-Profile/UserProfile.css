@@ -11,9 +11,29 @@
 }
 
 .intro, .photos, .friend-list {
-  height: 10rem;
-  width: 10rem;
+  min-height: 10rem;
+  width: 18rem;
   border: 1px solid black;
   margin: 0 1rem 1rem 0;
 }
 
+.profile-friendlist-pictures, .profile-user-pictures {
+  width: 5rem;
+  height: 5rem;
+}
+
+.friend-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-friendlist-container, .profile-pictures-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.profile-friendlist-pictures-container, .profile-user-pictures-container {
+  margin: .4rem;
+  border: 1px solid black;
+}

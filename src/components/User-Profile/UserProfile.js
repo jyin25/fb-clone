@@ -5,11 +5,16 @@ import Newsfeed from '../Newsfeed/Newsfeed';
 import FriendsList from './Friendlist/Friendlist';
 import Intro from './Intro/Intro';
 import Photo from './Photos/Photo';
+import {Link} from 'react-router-dom';
+import dog from '../../pictures/dog.jpg';
+import cat from '../../pictures/cat.jpg';
+
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props)
     this.state={
+      edit_bio: false,
       user_profile: [
         {
           userid: 1,
@@ -18,25 +23,52 @@ class UserProfile extends React.Component {
           email: "jyin25@gmail.com",
           work: "PowerSchool",
           current_city: "sacramento, ca",
-          about_me: "asdfsadfsa"
+          about_me: "",
+          friendList: 
+            [
+              {
+                userid: 1,
+                firstLast: "dog",
+                photo: dog
+              },
+              {
+                userid: 2,
+                firstLast: "dog",
+                photo: dog
+              },
+              {
+                userid: 3,
+                firstLast: "dog",
+                photo: cat
+              },
+              {
+                userid: 4,
+                firstLast: "dog",
+                photo: cat
+              },
+            ]
         }
       ],
       user_pictures: [
         {
           id: "asdf",
-          userid: 1
+          userid: 1,
+          photo: dog
         },
         {
           id: "asdf",
-          userid: 1
+          userid: 1,
+          photo: dog
         },
         {
           id: "asdf",
-          userid: 1
+          userid: 1,
+          photo: dog
         },
         {
           id: "asdf",
-          userid: 1
+          userid: 1,
+          photo: dog
         }
       ],
       users_post: [
@@ -88,22 +120,85 @@ class UserProfile extends React.Component {
     
   }
 
+  handleBio = () => {
+    this.setState({edit_bio: true})
+  }
+
+  handleBioFalse = () => {
+    this.setState({edit_bio: false})
+  }
+
+  renderBio = () => {
+    console.log('sdf')
+    return (
+      <form>
+        <input value={this.state.user_profile[0].about_me}></input>
+        <button onClick={() => this.handleBioFalse()}>Cancel</button>
+        <button onClick={() => this.handleBioFalse()}>Save</button>
+      </form>
+    )
+  }
+
   render() {
+    console.log(this.state.edit_bio)
     return (
       <div>
         <header>
           <div className="profile-header">
             <div className="or-user-icon"></div>
-            <p>About</p>
-            <p>Friends</p>
-            <p>Photos</p>
+            <Link to="/user/about"><p>About</p></Link>
+            <Link to="/user/friends"><p>Friends</p></Link>
+            <Link to="/user/photos"><p>Photos</p></Link>
           </div>
         </header>
         <div className="profile-body">
           <div className="profile-left">
-            <div className="intro"></div>
-            <div className="photos"></div>
-            <div className="friend-list"></div>
+            <div className="intro">
+              <header>Intro</header>
+              {
+                this.state.user_profile[0].about_me?
+                  <>
+                    {this.state.edit_bio? 
+                      this.renderBio(): 
+                      <>
+                      {this.state.user_profile[0].about_me}
+                      <button onClick={() => this.handleBio()}>Edit Bio</button>
+                      </>}
+                  </>: 
+                  <form>
+                    <label>Add a short bio to tell people more about yourself.</label>
+                    <input></input>
+                    <button type="submit">Add</button>
+                  </form>
+                }
+            </div>
+            <div className="photos">
+              <header>Photos</header>
+              <div className="profile-pictures-container">
+                {this.state.user_pictures.map(data => {
+                  return (
+                    <div className="profile-user-pictures-container">
+                      <img className="profile-user-pictures" src={data.photo}/>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+            <div className="friend-list">
+              <header>Friends</header>
+              <div className="profile-friendlist-container">
+              {this.state.user_profile[0].friendList.map(data => {
+                return (
+                  <Link to="/user">
+                    <div className="profile-friendlist-pictures-container">
+                      <img className="profile-friendlist-pictures" src={data.photo}/>
+                      <p>{data.userid}</p>
+                    </div>
+                  </Link>
+                )
+              })}
+              </div>
+            </div>
           </div>
           <div className="profile-right">
             <Status/>

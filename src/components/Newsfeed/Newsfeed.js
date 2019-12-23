@@ -13,9 +13,6 @@ class Newsfeed extends React.Component {
     this.setState({users: this.props.users})
   }
 
-
-
-
   render() {
     return (
       <>
