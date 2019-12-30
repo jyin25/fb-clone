@@ -20,10 +20,10 @@ class UserProfile extends React.Component {
           userid: 1,
           user_name: "Jun Yin",
           education: "UCSC",
-          email: "jyin25@gmail.com",
+          email: "",
           work: "PowerSchool",
           current_city: "sacramento, ca",
-          about_me: "",
+          about_me: "a",
           friendList: 
             [
               {
@@ -146,7 +146,7 @@ class UserProfile extends React.Component {
         <header>
           <div className="profile-header">
             <div className="or-user-icon"></div>
-            <Link to="/user/about"><p>About</p></Link>
+            <Link to={{pathname: `/user/about`, userBio: this.state.user_profile}}><p>About</p></Link>
             <Link to="/user/friends"><p>Friends</p></Link>
             <Link to="/user/photos"><p>Photos</p></Link>
           </div>
