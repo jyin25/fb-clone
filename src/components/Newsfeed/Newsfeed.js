@@ -1,19 +1,33 @@
 import React from 'react';
-import './Newsfeed.css'
+import './Newsfeed.css';
+import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai';
 
 class Newsfeed extends React.Component {
   constructor(props) {
     super(props)
     this.state={
-      users: [],
+      users: this.props.users,
     }
   }
 
-  componentDidMount() {
-    this.setState({users: this.props.users})
+  // componentDidMount() {
+  //   this.setState({users: this.props.users})
+  // }
+
+  componentDidUpdate() {
+    if(this.state.users.length !== this.props.users.length) {
+      let newPosts = this.props.users
+      this.handleUpdateUserPosts(newPosts)
+    }
+  }
+
+  handleUpdateUserPosts = async newPosts => {
+    this.setState({users: newPosts})
   }
 
   render() {
+    console.log(this.props.users)
+    console.log(this.state.users)
     return (
       <>
         <div>
@@ -36,8 +50,8 @@ class Newsfeed extends React.Component {
                   </div>
                 }
                 <div className="news-icons">
-                  <p>like icon</p>
-                  <p>comment icon</p>
+                  <AiOutlineLike />
+                  <AiOutlineDislike/>
                 </div>
                 <div className="news-comments">
                   {userData.comments.map(userComments => {

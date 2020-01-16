@@ -8,116 +8,44 @@ import Photo from './Photos/Photo';
 import {Link} from 'react-router-dom';
 import dog from '../../pictures/dog.jpg';
 import cat from '../../pictures/cat.jpg';
-
+import store from '../../store';
+import Context from '../Context/Context';
 
 class UserProfile extends React.Component {
+  static contextType = Context;
+
   constructor(props) {
     super(props)
     this.state={
       edit_bio: false,
-      user_profile: [
-        {
-          userid: 1,
-          user_name: "Jun Yin",
-          education: "UCSC",
-          email: "",
-          work: "PowerSchool",
-          current_city: "sacramento, ca",
-          about_me: "a",
-          friendList: 
-            [
-              {
-                userid: 1,
-                firstLast: "dog",
-                photo: dog
-              },
-              {
-                userid: 2,
-                firstLast: "dog",
-                photo: dog
-              },
-              {
-                userid: 3,
-                firstLast: "dog",
-                photo: cat
-              },
-              {
-                userid: 4,
-                firstLast: "dog",
-                photo: cat
-              },
-            ]
-        }
-      ],
-      user_pictures: [
-        {
-          id: "asdf",
-          userid: 1,
-          photo: dog
-        },
-        {
-          id: "asdf",
-          userid: 1,
-          photo: dog
-        },
-        {
-          id: "asdf",
-          userid: 1,
-          photo: dog
-        },
-        {
-          id: "asdf",
-          userid: 1,
-          photo: dog
-        }
-      ],
-      users_post: [
-        {
-          user: "Jun Yin",
-          status: "this project is hard",
-          pictures: "a",
-          time: "1/1/1",
-          likes: 0,
-          comments: 
-          [
-            {
-              user: "Jun",
-              comment: "You asdf sf asdf sdf sd f sdf as df asd fsa df sa dfs df sd fas df asdf as df sad fsa df sadf sad f sad fsd."
-            },
-            {
-              user: "Jun",
-              comment: "Can!"
-            },
-            {
-              user: "Jun",
-              comment: "Do it!"
-            },
-          ]
-        },
-        {
-          users_post: "Kindrick Yin",
-          status: "Milk!",
-          pictures: "",
-          time: "1/1/1",
-          likes: 0,
-          comments: 
-          [
-            {
-              user: "Jun",
-              comment: "Hi Baby!"
-            },
-            {
-              user: "Annie",
-              comment: "Hi Baby!"
-            },
-          ]
-        }
-      ],
+      user_profile: [],
+      user_pictures: [],
+      users_post: [],
+      updateBio: ""
     }
   }
 
-  componentDidMount() {
-    
+  componentWillMount() {
+    this.setState({
+      user_profile: store.profile,
+      updateBio: store.profile[0].about_me,
+      user_pictures: store.pictures,
+      users_post: store.post
+    })
+  }
+
+  componentDidUpdate() {
+    if(this.context.updatedStatus.id !== this.state.users_post[0].id) {
+      //fetch new status
+      const test = [...this.state.users_post]
+      test.unshift(this.context.updatedStatus)
+      this.handleNewPostState(test)
+    }
+  }
+
+  handleNewPostState = async test => {
+    await this.setState({users_post: test})
+    console.log(this.state.users_post)
   }
 
   handleBio = () => {
@@ -128,19 +56,33 @@ class UserProfile extends React.Component {
     this.setState({edit_bio: false})
   }
 
+  updateBio = (e) => {
+    console.log(e.target.value)
+    this.setState({updateBio: e.target.value})
+  }
+
+  handleSaveBio = async (e) => {
+    e.preventDefault()
+    let newBioState = {...this.state.user_profile[0]}
+    newBioState.about_me = this.state.updateBio
+    await this.setState({user_profile: [newBioState]})
+    this.setState({edit_bio: false})
+    //send bio api
+  }
+
   renderBio = () => {
-    console.log('sdf')
+    
     return (
-      <form>
-        <input value={this.state.user_profile[0].about_me}></input>
-        <button onClick={() => this.handleBioFalse()}>Cancel</button>
-        <button onClick={() => this.handleBioFalse()}>Save</button>
+      <form onSubmit={(e) => this.handleSaveBio(e)}>
+        <input value={this.state.updateBio} onChange={(e) => this.updateBio(e)}></input>
+        <button type="button" onClick={() => this.handleBioFalse()}>Cancel</button>
+        <button type="submit">Save</button>
       </form>
     )
   }
 
   render() {
-    console.log(this.state.edit_bio)
+    console.log(this.context.updatedStatus)
     return (
       <div>
         <header>
@@ -162,7 +104,7 @@ class UserProfile extends React.Component {
                       this.renderBio(): 
                       <>
                       {this.state.user_profile[0].about_me}
-                      <button onClick={() => this.handleBio()}>Edit Bio</button>
+                      <button type="button" onClick={() => this.handleBio()}>Edit Bio</button>
                       </>}
                   </>: 
                   <form>

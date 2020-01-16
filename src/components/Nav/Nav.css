@@ -7,5 +7,23 @@
   padding: 1rem 0 1rem 0;
   background-color: #385898;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.nav-bar > p {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.home-padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.icon-padding {
+  padding-left: .5rem;
+  padding-right: .5rem;
 }

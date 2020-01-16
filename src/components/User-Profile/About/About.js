@@ -10,18 +10,44 @@ class About extends React.Component {
       edit_email: false,
       edit_work: false,
       edit_currentCity: false,
-      edit_aboutMe: false
+      edit_aboutMe: false,
+      updateEducation: "",
+      updateEmail: "",
+      userInfo: []
     }
   }
 
+  componentDidMount() {
+    this.setState({
+      userInfo: this.props.location.userBio
+    })
+  }
+
+
+
   renderEducation = () => {
     return (
-      <form>
-        <input value={this.props.location.userBio[0].education}></input>
-        <button onClick={() => this.handleEduFalse()}>Cancel</button>
-        <button onClick={() => this.handleEduFalse()}>Save</button>
+      <form onSubmit={(e) => this.handleSubmitEducation(e)}>
+        <input value={this.state.updateEducation} onChange={(e) => this.handleUpdateEducation(e)}></input>
+        <button type="button" onClick={() => this.handleEduFalse()}>Cancel</button>
+        <button type="submit">Save</button>
       </form>
     )
+  }
+
+  handleUpdateEducation = (e) => {
+    this.setState({updateEducation: e.target.value})
+  }
+
+  handleSubmitEducation = async (e) => {
+    e.preventDefault()
+    let newEducationInfo = [...this.props.location.userBio]
+    newEducationInfo[0].education = this.state.updateEducation
+    await this.setState({
+      edit_education: false,
+      userInfo: newEducationInfo
+    })
+    //send info to api
   }
 
   handleEduFalse = () => {
@@ -34,13 +60,31 @@ class About extends React.Component {
 
   renderEmail = () => {
     return (
-      <form>
-        <input value={this.props.location.userBio[0].email}></input>
-        <button onClick={() => this.handleEmailFalse()}>Cancel</button>
-        <button onClick={() => this.handleEmailFalse()}>Save</button>
+      <form onSubmit={(e) => this.handleSubmitEmail(e)}>
+        <input value={this.state.updateEmail} onChange={(e) => this.handleUpdateEmail(e)}></input>
+        <button type="button" onClick={() => this.handleEmailFalse()}>Cancel</button>
+        <button type="submit">Save</button>
       </form>
     )
   }
+
+  handleUpdateEmail = async (e) => {
+    this.setState({updateEmail: e.target.value})
+  }
+
+  handleSubmitemail = async (e) => {
+    e.preventDefault()
+    let newEmailInfo = [...this.props.location.userBio]
+    newEmailInfo[0].email = this.state.updateEmail
+    console.log(newEmailInfo)
+    await this.setState({
+      edit_email: false,
+      userInfo: newEmailInfo
+    })
+
+    //send info to api
+  }
+
 
   handleEmailFalse = () => {
     this.setState({edit_email: false})
@@ -130,7 +174,7 @@ class About extends React.Component {
             <h1>About</h1>
           </div>
           <div className="about-info">
-            {userBio.map(data => {
+            {this.state.userInfo.map(data => {
               return (
                 <>
                   {
@@ -161,10 +205,10 @@ class About extends React.Component {
                            </>
                         }
                       </>:
-                        <form>
-                          <label>Add Education</label>
-                          <input></input>
-                          <button>Add</button>
+                        <form onSubmit={(e) => this.handleSubmitemail(e)}>
+                          <label>Email</label>
+                          <input value={this.state.updateEmail} onChange={(e) => this.handleUpdateEmail(e)}></input>
+                          <button type="submit">Add</button>
                         </form>
                   }
                   {

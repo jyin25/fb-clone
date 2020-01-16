@@ -4,7 +4,8 @@ import Newsfeed from '../Newsfeed/Newsfeed';
 import Sidebar from '../Sidebar/Sidebar';
 import Status from '../Status/Status';
 import RightSide from '../Rightside/Right-side-bar';
-import './Main.css'
+import './Main.css';
+import store from '../../store'
 
 class Main extends React.Component {
   constructor(props) {
@@ -71,27 +72,26 @@ class Main extends React.Component {
   
 
   render() {
+    console.log(store.profile)
     return (
-      <>
       <div>
         <Nav/>
+        <main className="main-container">
+          <section className="left-side">
+            <Sidebar/>
+          </section>
+          <section className="status-news-container">
+            <Status/>
+            <div>
+              
+              <Newsfeed users={this.state.usersfeed}/>
+            </div>
+          </section>
+          <section className="right-side">
+            <RightSide/>
+          </section>
+        </main>
       </div>
-      <main className="main-container">
-        <section className="left-side">
-          <Sidebar/>
-        </section>
-        <section className="status-news-container">
-          <Status/>
-          <div>
-            
-            <Newsfeed users={this.state.usersfeed}/>
-          </div>
-        </section>
-        <section className="right-side">
-          <RightSide/>
-        </section>
-      </main>
-      </>
     )
   }
 }

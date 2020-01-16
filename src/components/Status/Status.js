@@ -1,7 +1,9 @@
 import React from 'react';
 import './Status.css';
+import Context from '../Context/Context'
 
 class Status extends React.Component {
+  static contextType = Context;
 
   constructor(props) {
     super(props)
@@ -12,9 +14,17 @@ class Status extends React.Component {
 
   handleStatusSubmit = (e) => {
     e.preventDefault();
-    //create new entry in database
-    //fetch new entry
-    //set new entry data to the App state
+    const newStatus = {
+      id: 3,
+      user: "Jun Yin",
+      status: this.state.status,
+      pictures: "a",
+      time: "1/1/1",
+      likes: 0,
+      comments: []
+    }
+    
+    this.context.handleUpdateStatus(newStatus)
   }
 
   handleInput = (e) => {
