@@ -35,7 +35,8 @@ class UserProfile extends React.Component {
   }
 
   componentDidUpdate() {
-    if(this.context.updatedStatus.id !== this.state.users_post[0].id) {
+    console.log(this.context.updatedStatus.id)
+    if(this.context.updatedStatus.id !== undefined && this.context.updatedStatus.id !== this.state.users_post[0].id) {
       //fetch new status
       const test = [...this.state.users_post]
       test.unshift(this.context.updatedStatus)
@@ -107,9 +108,9 @@ class UserProfile extends React.Component {
                       <button type="button" onClick={() => this.handleBio()}>Edit Bio</button>
                       </>}
                   </>: 
-                  <form>
+                  <form onSubmit={(e) => this.handleSaveBio(e)}>
                     <label>Add a short bio to tell people more about yourself.</label>
-                    <input></input>
+                    <input value={this.state.updateBio} onChange={(e) => this.updateBio(e)}></input>
                     <button type="submit">Add</button>
                   </form>
                 }

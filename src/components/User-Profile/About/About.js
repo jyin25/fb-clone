@@ -13,13 +13,21 @@ class About extends React.Component {
       edit_aboutMe: false,
       updateEducation: "",
       updateEmail: "",
-      userInfo: []
+      userInfo: [],
+      updateWork: "",
+      updateCurrentCity: "",
+      updateAboutMe: ""
     }
   }
 
   componentDidMount() {
     this.setState({
-      userInfo: this.props.location.userBio
+      userInfo: this.props.location.userBio,
+      updateEducation: this.props.location.userBio[0].education,
+      updateEmail: this.props.location.userBio[0].email,
+      updateWork: this.props.location.userBio[0].work,
+      updateCurrentCity: this.props.location.userBio[0].current_city,
+      updateAboutMe: this.props.location.userBio[0].about_me,
     })
   }
 
@@ -68,23 +76,21 @@ class About extends React.Component {
     )
   }
 
-  handleUpdateEmail = async (e) => {
+  handleUpdateEmail = (e) => {
     this.setState({updateEmail: e.target.value})
   }
 
-  handleSubmitemail = async (e) => {
+  handleSubmitEmail = async (e) => {
     e.preventDefault()
-    let newEmailInfo = [...this.props.location.userBio]
+    let newEmailInfo = [...this.state.userInfo]
     newEmailInfo[0].email = this.state.updateEmail
-    console.log(newEmailInfo)
+
     await this.setState({
       edit_email: false,
       userInfo: newEmailInfo
     })
-
     //send info to api
   }
-
 
   handleEmailFalse = () => {
     this.setState({edit_email: false})
@@ -98,12 +104,27 @@ class About extends React.Component {
 
   renderWork = () => {
     return (
-      <form>
-        <input value={this.props.location.userBio[0].work}></input>
-        <button onClick={() => this.handleWorkFalse()}>Cancel</button>
-        <button onClick={() => this.handleWorkFalse()}>Save</button>
+      <form onSubmit={(e) => this.handleSubmitWork(e)}>
+        <input value={this.state.updateWork} onChange={(e) => this.handleUpdateWork(e)}></input>
+        <button type="button" onClick={() => this.handleWorkFalse()}>Cancel</button>
+        <button type="submit">Save</button>
       </form>
     )
+  }
+
+  handleUpdateWork =  (e) => {
+    this.setState({updateWork: e.target.value})
+  }
+
+  handleSubmitWork = async (e) => {
+    e.preventDefault()
+    let newWorkInfo = [...this.state.userInfo]
+    newWorkInfo[0].work = this.state.updateWork
+    await this.setState({
+      edit_work: false,
+      userInfo: newWorkInfo
+    })
+    //send info to db
   }
 
   handleWorkFalse = () => {
@@ -117,12 +138,26 @@ class About extends React.Component {
 
   renderLocation = () => {
     return (
-      <form>
-        <input value={this.props.location.userBio[0].current_city}></input>
-        <button onClick={() => this.handleLocationFalse()}>Cancel</button>
-        <button onClick={() => this.handleLocationFalse()}>Save</button>
+      <form onSubmit={(e) => this.handleSubmitLocation(e)}>
+        <input value={this.state.updateCurrentCity} onChange={(e) => this.handleUpdateLocation(e)}></input>
+        <button type="button" onClick={() => this.handleLocationFalse()}>Cancel</button>
+        <button type="submit">Save</button>
       </form>
     )
+  }
+
+  handleUpdateLocation = (e) => {
+    this.setState({updateCurrentCity: e.target.value})
+  }
+
+  handleSubmitLocation = async (e) => {
+    e.preventDefault()
+    let newLocationInfo = [...this.state.userInfo]
+    newLocationInfo[0].current_city = this.state.updateCurrentCity
+    await this.setState({
+      edit_currentCity: false,
+      userInfo: newLocationInfo
+    })
   }
 
   handleLocationFalse = () => {
@@ -136,12 +171,26 @@ class About extends React.Component {
 
   renderAboutMe = () => {
     return (
-      <form>
-        <input value={this.props.location.userBio[0].about_me}></input>
-        <button onClick={() => this.handleAboutMeFalse()}>Cancel</button>
-        <button onClick={() => this.handleAboutMeFalse()}>Save</button>
+      <form onSubmit={(e) => this.handleSubmitAboutMe(e)}>
+        <input value={this.state.updateAboutMe} onChange={(e) => this.handleUpdateAboutMe(e)}></input>
+        <button type="button" onClick={() => this.handleAboutMeFalse()}>Cancel</button>
+        <button type="submit">Save</button>
       </form>
     )
+  }
+
+  handleUpdateAboutMe = (e) => {
+    this.setState({updateAboutMe: e.target.value})
+  }
+
+  handleSubmitAboutMe = async (e) => {
+    e.preventDefault()
+    let newAboutInfo = [...this.state.userInfo]
+    newAboutInfo[0].about_me = this.state.updateAboutMe
+    await this.setState({
+      edit_aboutMe: false,
+      userInfo: newAboutInfo
+    })
   }
 
   handleAboutMeFalse = () => {
@@ -158,7 +207,6 @@ class About extends React.Component {
 
   
   render() {
-    let userBio = this.props.location.userBio
     return (
       <>
         <header>
@@ -188,10 +236,10 @@ class About extends React.Component {
                            </>
                         }
                       </>:
-                        <form>
+                        <form onSubmit={(e) => this.handleSubmitEducation(e)}>
                           <label>Add Education</label>
-                          <input></input>
-                          <button>Add</button>
+                          <input value={this.state.updateEducation} onChange={(e) => this.handleUpdateEducation(e)}></input>
+                          <button type="submit">Add</button>
                         </form>
                   }
                   {
@@ -205,7 +253,7 @@ class About extends React.Component {
                            </>
                         }
                       </>:
-                        <form onSubmit={(e) => this.handleSubmitemail(e)}>
+                        <form onSubmit={(e) => this.handleSubmitEmail(e)}>
                           <label>Email</label>
                           <input value={this.state.updateEmail} onChange={(e) => this.handleUpdateEmail(e)}></input>
                           <button type="submit">Add</button>
@@ -222,10 +270,10 @@ class About extends React.Component {
                            </>
                         }
                       </>:
-                        <form>
+                        <form onSubmit={(e) => this.handleSubmitWork(e)}>
                           <label>Add Work</label>
-                          <input></input>
-                          <button>Add</button>
+                          <input value={this.state.updateWork} onChange={(e) => this.handleUpdateWork(e)}></input>
+                          <button type="submit">Add</button>
                         </form>
                   }
                   {
@@ -239,10 +287,10 @@ class About extends React.Component {
                            </>
                         }
                       </>:
-                        <form>
+                        <form onSubmit={(e) => this.handleSubmitLocation(e)}>
                           <label>Add Location</label>
-                          <input></input>
-                          <button>Add</button>
+                          <input value={this.state.updateCurrentCity} onChange={(e) => this.handleUpdateLocation(e)}></input>
+                          <button type="submit">Add</button>
                         </form>
                   }
                   {
@@ -256,10 +304,10 @@ class About extends React.Component {
                            </>
                         }
                       </>:
-                        <form>
+                        <form onSubmit={(e) => this.handleSubmitAboutMe(e)}>
                           <label>Add About Me</label>
-                          <input></input>
-                          <button>Add</button>
+                          <input value={this.state.updateAboutMe} onChange={(e) => this.handleUpdateAboutMe(e)}></input>
+                          <button type="submit">Add</button>
                         </form>
                   }
                 </>

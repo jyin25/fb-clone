@@ -15,7 +15,7 @@ class Status extends React.Component {
   handleStatusSubmit = (e) => {
     e.preventDefault();
     const newStatus = {
-      id: 3,
+      id: Math.random(),
       user: "Jun Yin",
       status: this.state.status,
       pictures: "a",

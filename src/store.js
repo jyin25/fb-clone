@@ -64,6 +64,7 @@ const store = {
       pictures: "a",
       time: "1/1/1",
       likes: 0,
+      dislikes: 0,
       comments: 
       [
         {
@@ -81,11 +82,13 @@ const store = {
       ]
     },
     {
+      id: 2,
       users_post: "Kindrick Yin",
       status: "Milk!",
       pictures: "",
       time: "1/1/1",
       likes: 0,
+      dislikes: 0,
       comments: 
       [
         {
